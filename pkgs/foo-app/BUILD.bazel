@@ -11,7 +11,6 @@ ts_project(
     root_dir = "src",
     validate = False,
     srcs = glob(["src/**"]),
-    assets = glob(["src/**/*.css"]),
     deps = [":node_modules", "//:node_modules"],
     declaration = True,
     out_dir = "dist",
