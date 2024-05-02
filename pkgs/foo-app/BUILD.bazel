@@ -1,0 +1,45 @@
+load("@aspect_rules_js//npm:defs.bzl", "npm_package")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@aspect_rules_js//js:defs.bzl", "js_binary", "js_image_layer")
+load("@npm//:defs.bzl", "npm_link_all_packages")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_tarball")
+
+npm_link_all_packages(name = "node_modules")
+
+ts_project(
+    name = "typescript",
+    root_dir = "src",
+    validate = False,
+    srcs = glob(["src/**"]),
+    assets = glob(["src/**/*.css"]),
+    deps = [":node_modules", "//:node_modules"],
+    declaration = True,
+    out_dir = "dist",
+)
+
+js_binary(
+    name = "bin",
+    entry_point = "dist/index.js",
+)
+
+js_image_layer(
+    name = "layers",
+    binary = ":bin",
+    root = "/",
+)
+
+oci_image(
+    name = "image",
+    base = "@debian",
+    cmd = ["/pkgs/foo-app/bin"],
+    entrypoint = ["/bin/bash"],
+    tars = [
+        ":layers",
+    ],
+)
+
+oci_tarball(
+    name = "foo-app",
+    image = ":image",
+    repo_tags = ["wb:latest"],
+)

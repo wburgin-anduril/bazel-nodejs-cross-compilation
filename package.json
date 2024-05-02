@@ -1,0 +1,17 @@
+{
+  "name": "hello-cross-compilation",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@bazel/bazelisk": "^1.19.0",
+    "@bazel/ibazel": "^0.25.0",
+    "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "build": "./bazel build //pkgs/foo-app",
+    "dev": "./ibazel run //pkgs/foo-app:dev"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@monorepo/foo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "../../bazel build .",
+    "dev": "../../ibazel run dev"
+  },
+  "dependencies": { },
+  "author": "Walker Burgin <walkerburgin@gmail.com>"
+}
