@@ -1,5 +1,5 @@
 {
-  "name": "hello-cross-compilation",
+  "name": "bazel-nodejs-cross-compilation",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
