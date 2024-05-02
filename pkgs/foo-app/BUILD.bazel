@@ -41,5 +41,5 @@ oci_image(
 oci_tarball(
     name = "foo-app",
     image = ":image",
-    repo_tags = ["wb:latest"],
+    repo_tags = ["bazel-nodejs-cross-compilation:latest"],
 )
