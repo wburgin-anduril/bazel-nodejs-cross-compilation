@@ -1,14 +1,20 @@
 bazel_dep(name = "aspect_bazel_lib", version = "2.5.0")
 bazel_dep(name = "aspect_rules_js", version = "1.37.0")
 bazel_dep(name = "aspect_rules_ts", version = "2.3.0")
-bazel_dep(name = "rules_nodejs", version = "6.0.3")
+bazel_dep(name = "rules_nodejs", version = "5.8.3")
 bazel_dep(name = "rules_oci", version = "1.6.0")
 
 single_version_override(module_name = "rules_oci", patches = ["//third_party/rules_oci:no_xattr.patch"], patch_strip = 1)
 
 node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
-node.toolchain(node_version = "20.5.1")
+node.toolchain(node_version = "16.14.2")
+
 use_repo(node, "nodejs_toolchains")
+
+register_toolchains(
+    "@nodejs_toolchains//:linux_arm64_toolchain_target",
+    "@nodejs_toolchains//:linux_arm64_toolchain",
+)
 
 npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True)
 
