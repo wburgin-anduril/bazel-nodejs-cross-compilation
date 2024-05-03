@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 6,
-  "moduleFileHash": "92a2cff4d9d71d0e73aa8e0bb3823583c12b0f57ac5ce477860e36acc9df1954",
+  "moduleFileHash": "7c58430d46093654938e87703a09aa39eec00e4ebe8f3dff34b5c41b4c7f69a2",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -24,7 +24,8 @@
       "executionPlatformsToRegister": [],
       "toolchainsToRegister": [
         "@nodejs_toolchains//:linux_arm64_toolchain_target",
-        "@nodejs_toolchains//:linux_arm64_toolchain"
+        "@nodejs_toolchains//:linux_arm64_toolchain",
+        "@llvm_toolchain//:all"
       ],
       "extensionUsages": [
         {
@@ -169,14 +170,166 @@
           ],
           "hasDevUseExtension": false,
           "hasNonDevUseExtension": true
+        },
+        {
+          "extensionBzlFile": "//:MODULE.bazel",
+          "extensionName": "_repo_rules",
+          "usingModule": "<root>",
+          "location": {
+            "file": "@@//:MODULE.bazel",
+            "line": 0,
+            "column": 0
+          },
+          "imports": {
+            "org_chromium_sysroot_linux_arm64": "org_chromium_sysroot_linux_arm64",
+            "org_chromium_sysroot_linux_x86_64": "org_chromium_sysroot_linux_x86_64",
+            "sysroot_darwin_universal": "sysroot_darwin_universal"
+          },
+          "devImports": [],
+          "tags": [
+            {
+              "tagName": "@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+              "attributeValues": {
+                "build_file_content": "\nfilegroup(\n    name = \"sysroot\",\n    srcs = glob([\"*/**\"]),\n    visibility = [\"//visibility:public\"],\n)\n",
+                "sha256": "cf2fefded0449f06d3cf634bfa94ffed60dbe47f2a14d2900b00eb9bcfb104b8",
+                "urls": [
+                  "https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/80fc74e431f37f590d0c85f16a9d8709088929e8/debian_bullseye_arm64_sysroot.tar.xz"
+                ],
+                "name": "org_chromium_sysroot_linux_arm64"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 85,
+                "column": 13
+              }
+            },
+            {
+              "tagName": "@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+              "attributeValues": {
+                "build_file_content": "\nfilegroup(\n    name = \"sysroot\",\n    srcs = glob([\"*/**\"]),\n    visibility = [\"//visibility:public\"],\n)\n",
+                "sha256": "04b94ba1098b71f8543cb0ba6c36a6ea2890d4d417b04a08b907d96b38a48574",
+                "urls": [
+                  "https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/f5f68713249b52b35db9e08f67184cac392369ab/debian_bullseye_amd64_sysroot.tar.xz"
+                ],
+                "name": "org_chromium_sysroot_linux_x86_64"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 92,
+                "column": 13
+              }
+            },
+            {
+              "tagName": "@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+              "attributeValues": {
+                "build_file_content": "\nfilegroup(\n    name = \"sysroot\",\n    srcs = glob(\n        include = [\"**\"],\n        exclude = [\"**/*:*\"],\n    ),\n    visibility = [\"//visibility:public\"],\n)\n",
+                "patch_cmds": [
+                  "rm System/Library/Frameworks/Ruby.framework/Versions/Current/Headers/ruby/ruby"
+                ],
+                "sha256": "71ae00a90be7a8c382179014969cec30d50e6e627570af283fbe52132958daaf",
+                "strip_prefix": "MacOSX11.3.sdk",
+                "urls": [
+                  "https://s3.us-east-2.amazonaws.com/static.aspect.build/sysroots/MacOSX11.3.sdk.tar.xz"
+                ],
+                "name": "sysroot_darwin_universal"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 99,
+                "column": 13
+              }
+            }
+          ],
+          "hasDevUseExtension": false,
+          "hasNonDevUseExtension": true
+        },
+        {
+          "extensionBzlFile": "@toolchains_llvm//toolchain/extensions:llvm.bzl",
+          "extensionName": "llvm",
+          "usingModule": "<root>",
+          "location": {
+            "file": "@@//:MODULE.bazel",
+            "line": 111,
+            "column": 21
+          },
+          "imports": {
+            "llvm_toolchain": "llvm_toolchain"
+          },
+          "devImports": [],
+          "tags": [
+            {
+              "tagName": "toolchain",
+              "attributeValues": {
+                "llvm_version": "16.0.0"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 112,
+                "column": 15
+              }
+            },
+            {
+              "tagName": "sysroot",
+              "attributeValues": {
+                "targets": [
+                  "linux-aarch64"
+                ],
+                "label": "@org_chromium_sysroot_linux_arm64//:sysroot"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 123,
+                "column": 13
+              }
+            },
+            {
+              "tagName": "sysroot",
+              "attributeValues": {
+                "targets": [
+                  "linux-x86_64"
+                ],
+                "label": "@org_chromium_sysroot_linux_x86_64//:sysroot"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 128,
+                "column": 13
+              }
+            },
+            {
+              "tagName": "sysroot",
+              "attributeValues": {
+                "targets": [
+                  "darwin-aarch64",
+                  "darwin-x86_64"
+                ],
+                "label": "@sysroot_darwin_universal//:sysroot"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 133,
+                "column": 13
+              }
+            }
+          ],
+          "hasDevUseExtension": false,
+          "hasNonDevUseExtension": true
         }
       ],
       "deps": {
         "aspect_bazel_lib": "aspect_bazel_lib@2.5.0",
         "aspect_rules_js": "aspect_rules_js@1.37.0",
         "aspect_rules_ts": "aspect_rules_ts@2.3.0",
-        "rules_nodejs": "rules_nodejs@5.8.3",
+        "rules_nodejs": "rules_nodejs@6.1.0",
         "rules_oci": "rules_oci@1.6.0",
+        "toolchains_llvm": "toolchains_llvm@1.0.0",
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_"
       }
@@ -425,7 +578,7 @@
         "aspect_rules_lint": "aspect_rules_lint@0.9.1",
         "bazel_features": "bazel_features@0.1.0",
         "bazel_skylib": "bazel_skylib@1.5.0",
-        "rules_nodejs": "rules_nodejs@5.8.3",
+        "rules_nodejs": "rules_nodejs@6.1.0",
         "platforms": "platforms@0.0.8",
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_"
@@ -480,10 +633,10 @@
         }
       }
     },
-    "rules_nodejs@5.8.3": {
+    "rules_nodejs@6.1.0": {
       "name": "rules_nodejs",
-      "version": "5.8.3",
-      "key": "rules_nodejs@5.8.3",
+      "version": "6.1.0",
+      "key": "rules_nodejs@6.1.0",
       "repoName": "rules_nodejs",
       "executionPlatformsToRegister": [],
       "toolchainsToRegister": [
@@ -493,9 +646,9 @@
         {
           "extensionBzlFile": "@rules_nodejs//nodejs:extensions.bzl",
           "extensionName": "node",
-          "usingModule": "rules_nodejs@5.8.3",
+          "usingModule": "rules_nodejs@6.1.0",
           "location": {
-            "file": "https://bcr.bazel.build/modules/rules_nodejs/5.8.3/MODULE.bazel",
+            "file": "https://bcr.bazel.build/modules/rules_nodejs/6.1.0/MODULE.bazel",
             "line": 12,
             "column": 21
           },
@@ -511,7 +664,7 @@
               },
               "devDependency": false,
               "location": {
-                "file": "https://bcr.bazel.build/modules/rules_nodejs/5.8.3/MODULE.bazel",
+                "file": "https://bcr.bazel.build/modules/rules_nodejs/6.1.0/MODULE.bazel",
                 "line": 16,
                 "column": 15
               }
@@ -532,14 +685,14 @@
         "ruleClassName": "http_archive",
         "attributes": {
           "urls": [
-            "https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.3/rules_nodejs-core-5.8.3.tar.gz"
+            "https://github.com/bazelbuild/rules_nodejs/releases/download/v6.1.0/rules_nodejs-v6.1.0.tar.gz"
           ],
-          "integrity": "sha256-voT7UjiiA0hwgQtgrmb4VV2zhf+TG9b2G+IEcy341KY=",
-          "strip_prefix": "",
+          "integrity": "sha256-3d1grMPy8wNZvvUCydeI9n4zgUsN3ZmqJ8WhXrekG4w=",
+          "strip_prefix": "rules_nodejs-6.1.0",
           "remote_patches": {
-            "https://bcr.bazel.build/modules/rules_nodejs/5.8.3/patches/module_dot_bazel.patch": "sha256-uUj19ijdMInU3vv2xy9e5I9wuA5jN6Rtm0OW699kZ2o="
+            "https://bcr.bazel.build/modules/rules_nodejs/6.1.0/patches/module_dot_bazel_version.patch": "sha256-WhHYMvRgKTYwlsjVxukJVQCOHuzyDitKsADaTl/TAac="
           },
-          "remote_patch_strip": 0
+          "remote_patch_strip": 1
         }
       }
     },
@@ -614,6 +767,35 @@
           "patch_args": [
             "-p1"
           ]
+        }
+      }
+    },
+    "toolchains_llvm@1.0.0": {
+      "name": "toolchains_llvm",
+      "version": "1.0.0",
+      "key": "toolchains_llvm@1.0.0",
+      "repoName": "toolchains_llvm",
+      "executionPlatformsToRegister": [],
+      "toolchainsToRegister": [],
+      "extensionUsages": [],
+      "deps": {
+        "bazel_skylib": "bazel_skylib@1.5.0",
+        "rules_cc": "rules_cc@0.0.9",
+        "platforms": "platforms@0.0.8",
+        "bazel_tools": "bazel_tools@_",
+        "local_config_platform": "local_config_platform@_"
+      },
+      "repoSpec": {
+        "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+        "ruleClassName": "http_archive",
+        "attributes": {
+          "urls": [
+            "https://github.com/bazel-contrib/toolchains_llvm/releases/download/1.0.0/toolchains_llvm-1.0.0.tar.gz"
+          ],
+          "integrity": "sha256-6RxDYfmQEaVIFOGvvlxDbg0ymHEUajzVjCOitK+1Bzc=",
+          "strip_prefix": "toolchains_llvm-1.0.0",
+          "remote_patches": {},
+          "remote_patch_strip": 0
         }
       }
     },
@@ -3439,7 +3621,7 @@
     },
     "@@rules_nodejs~//nodejs:extensions.bzl%node": {
       "general": {
-        "bzlTransitiveDigest": "KOk+Te5m8n3d0B9F5+lgyrzLbtEzqeqWset0MugBbOY=",
+        "bzlTransitiveDigest": "xIyDOX55uocuAZcmUQlPZH8TJnZ39RT9+Bi1o3PHghA=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -3453,57 +3635,87 @@
           },
           "nodejs_linux_s390x": {
             "bzlFile": "@@rules_nodejs~//nodejs:repositories.bzl",
-            "ruleClassName": "node_repositories",
+            "ruleClassName": "_nodejs_repositories",
             "attributes": {
-              "platform": "linux_s390x",
-              "node_version": "16.14.2"
+              "node_download_auth": {},
+              "node_repositories": {},
+              "node_urls": [
+                "https://nodejs.org/dist/v{version}/{filename}"
+              ],
+              "node_version": "16.14.2",
+              "platform": "linux_s390x"
             }
           },
           "nodejs_windows_amd64": {
             "bzlFile": "@@rules_nodejs~//nodejs:repositories.bzl",
-            "ruleClassName": "node_repositories",
+            "ruleClassName": "_nodejs_repositories",
             "attributes": {
-              "platform": "windows_amd64",
-              "node_version": "16.14.2"
+              "node_download_auth": {},
+              "node_repositories": {},
+              "node_urls": [
+                "https://nodejs.org/dist/v{version}/{filename}"
+              ],
+              "node_version": "16.14.2",
+              "platform": "windows_amd64"
             }
           },
           "nodejs_toolchains": {
-            "bzlFile": "@@rules_nodejs~//nodejs/private:toolchains_repo.bzl",
-            "ruleClassName": "toolchains_repo",
+            "bzlFile": "@@rules_nodejs~//nodejs/private:nodejs_toolchains_repo.bzl",
+            "ruleClassName": "nodejs_toolchains_repo",
             "attributes": {
               "user_node_repository_name": "nodejs"
             }
           },
           "nodejs_linux_amd64": {
             "bzlFile": "@@rules_nodejs~//nodejs:repositories.bzl",
-            "ruleClassName": "node_repositories",
+            "ruleClassName": "_nodejs_repositories",
             "attributes": {
-              "platform": "linux_amd64",
-              "node_version": "16.14.2"
+              "node_download_auth": {},
+              "node_repositories": {},
+              "node_urls": [
+                "https://nodejs.org/dist/v{version}/{filename}"
+              ],
+              "node_version": "16.14.2",
+              "platform": "linux_amd64"
             }
           },
           "nodejs_linux_ppc64le": {
             "bzlFile": "@@rules_nodejs~//nodejs:repositories.bzl",
-            "ruleClassName": "node_repositories",
+            "ruleClassName": "_nodejs_repositories",
             "attributes": {
-              "platform": "linux_ppc64le",
-              "node_version": "16.14.2"
+              "node_download_auth": {},
+              "node_repositories": {},
+              "node_urls": [
+                "https://nodejs.org/dist/v{version}/{filename}"
+              ],
+              "node_version": "16.14.2",
+              "platform": "linux_ppc64le"
             }
           },
           "nodejs_darwin_amd64": {
             "bzlFile": "@@rules_nodejs~//nodejs:repositories.bzl",
-            "ruleClassName": "node_repositories",
+            "ruleClassName": "_nodejs_repositories",
             "attributes": {
-              "platform": "darwin_amd64",
-              "node_version": "16.14.2"
+              "node_download_auth": {},
+              "node_repositories": {},
+              "node_urls": [
+                "https://nodejs.org/dist/v{version}/{filename}"
+              ],
+              "node_version": "16.14.2",
+              "platform": "darwin_amd64"
             }
           },
           "nodejs_linux_arm64": {
             "bzlFile": "@@rules_nodejs~//nodejs:repositories.bzl",
-            "ruleClassName": "node_repositories",
+            "ruleClassName": "_nodejs_repositories",
             "attributes": {
-              "platform": "linux_arm64",
-              "node_version": "16.14.2"
+              "node_download_auth": {},
+              "node_repositories": {},
+              "node_urls": [
+                "https://nodejs.org/dist/v{version}/{filename}"
+              ],
+              "node_version": "16.14.2",
+              "platform": "linux_arm64"
             }
           },
           "nodejs": {
@@ -3515,10 +3727,15 @@
           },
           "nodejs_darwin_arm64": {
             "bzlFile": "@@rules_nodejs~//nodejs:repositories.bzl",
-            "ruleClassName": "node_repositories",
+            "ruleClassName": "_nodejs_repositories",
             "attributes": {
-              "platform": "darwin_arm64",
-              "node_version": "16.14.2"
+              "node_download_auth": {},
+              "node_repositories": {},
+              "node_urls": [
+                "https://nodejs.org/dist/v{version}/{filename}"
+              ],
+              "node_version": "16.14.2",
+              "platform": "darwin_arm64"
             }
           }
         },
@@ -3983,6 +4200,80 @@
             "rules_oci~",
             "bazel_skylib",
             "bazel_skylib~"
+          ]
+        ]
+      }
+    },
+    "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
+      "general": {
+        "bzlTransitiveDigest": "rdQ1nlqTcj0kPoX7LxaygMQPcdnBPV85jNsRMF1M/Hw=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "llvm_toolchain": {
+            "bzlFile": "@@toolchains_llvm~//toolchain:rules.bzl",
+            "ruleClassName": "toolchain",
+            "attributes": {
+              "absolute_paths": false,
+              "archive_flags": {},
+              "compile_flags": {},
+              "coverage_compile_flags": {},
+              "coverage_link_flags": {},
+              "cxx_builtin_include_directories": {},
+              "cxx_flags": {},
+              "cxx_standard": {},
+              "dbg_compile_flags": {},
+              "exec_arch": "",
+              "exec_os": "",
+              "link_flags": {},
+              "link_libs": {},
+              "llvm_versions": {
+                "": "16.0.0"
+              },
+              "opt_compile_flags": {},
+              "opt_link_flags": {},
+              "stdlib": {},
+              "target_settings": {},
+              "unfiltered_compile_flags": {},
+              "toolchain_roots": {},
+              "sysroot": {
+                "linux-aarch64": "'@@_main~_repo_rules~org_chromium_sysroot_linux_arm64//:sysroot'",
+                "linux-x86_64": "'@@_main~_repo_rules~org_chromium_sysroot_linux_x86_64//:sysroot'",
+                "darwin-aarch64": "'@@_main~_repo_rules~sysroot_darwin_universal//:sysroot'",
+                "darwin-x86_64": "'@@_main~_repo_rules~sysroot_darwin_universal//:sysroot'"
+              }
+            }
+          },
+          "llvm_toolchain_llvm": {
+            "bzlFile": "@@toolchains_llvm~//toolchain:rules.bzl",
+            "ruleClassName": "llvm",
+            "attributes": {
+              "alternative_llvm_sources": [],
+              "auth_patterns": {},
+              "distribution": "auto",
+              "exec_arch": "",
+              "exec_os": "",
+              "llvm_mirror": "",
+              "llvm_version": "16.0.0",
+              "llvm_versions": {},
+              "netrc": "",
+              "sha256": {},
+              "strip_prefix": {},
+              "urls": {}
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "toolchains_llvm~",
+            "bazel_tools",
+            "bazel_tools"
+          ],
+          [
+            "toolchains_llvm~",
+            "toolchains_llvm",
+            "toolchains_llvm~"
           ]
         ]
       }
